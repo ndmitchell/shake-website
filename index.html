@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <title>Shake Build System - Shake build system - Home page</title>
+        <link rel="stylesheet" href="index.css"></link>
+    </head>
+    <body>
+
+<div id="header">
+    <h1>Shake build system - Home page</h1>
+    <p id="tagline">Powerful, efficient, robust - choose three</p>
+</div>
+
+</remove:h1>
+<div id="body">
+<p>Shake is a tool for writing build systems - an alternative to make, Scons, Ant etc. Shake has been used commercially for over five years, running thousands of builds per day.</p><div id="messages">
+<br class="gap" /><h2>Why try Shake?</h2><p>Shake lets you express lots of dependencies more precisely and directly than other build systems. This power is coupled with a fast and robust implementation that ensures builds run quickly and produce results you can rely on. In particular, Shake excels at working with generated files, somewhere other build systems often struggle. <a href="Why.md">Read more</a>.</p><br class="gap" /><h2>Getting started</h2><p>You need to install the <a href="http://www.haskell.org/platform/">Haskell Platform</a>, type <code>cabal update &amp;&amp; cabal install shake</code>, then run <code>shake --demo</code> which will create a sample Shake file build system and compile it.</p><br class="gap" /><h2>Going deeper</h2><p>Read the user manual and see the Haddock documentation. Try the profiling.</p><br class="gap" /><h2>Asking questions</h2><p>Stuck? Confused? Frustrated? Please get in contact! You can ask questions on <a href="http://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a> using the tag <code>shake-build-system</code>. You can email the <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Mailing list</a> with anything about Shake. If you find a bug you can report it at the <a href="https://github.com/ndmitchell/shake/issues">GitHub issue tracker</a>. If your question needs to remain confidential you can <a href="http://community.haskell.org/~ndm/contact/">email me</a>, although any insights from your question won't be public, so the other approaches are preferred. If in doubt, just use the <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Mailing list</a>.</p><br class="gap" /><h2>Technical details</h2><p>Shake build systems are Haskell programs that make heavy use of the <code>shake</code> library. While Shake build systems are Haskell programs, they can be treated as a powerful version of make with slightly funny syntax. The build system requires no significant Haskell knowledge, and is designed so that most features are accessible by learning the &quot;Shake syntax&quot;, without any appreciation of what the underlying Haskell means. The library features monadic dependencies (new dependencies can be discovered after files can depend on other files), polymorphic dependencies (your dependencies don't have to be files) and dependencies that rebuild but don't change stop rebuilding.</p><br class="gap" /><h2>What else?</h2><p>Can execute Ninja files, integrate with CMake, progress messages, profiling support, robust underlying theory.</p><br class="gap" /><h2>Used by</h2><p>Standard Chartered, Fractis, etc.</p></div>
+</div>
+
+<div id="footer">
+    <p>Copyright <a href="https://github.com/ndmitchell">Neil Mitchell</a> 2014</p>
+</div>
+
+</body>
+</html>

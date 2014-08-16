@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <title>Shake Build System - Shake build system - Developing Shake</title>
+        <link rel="stylesheet" href="index.css"></link>
+    </head>
+    <body>
+
+<div id="header">
+    <h1>Shake build system - Developing Shake</h1>
+    <p id="tagline">Powerful, efficient, robust - choose three</p>
+</div>
+
+</remove:h1>
+<div id="body">
+<p>I welcome contributions. Generally:</p><ul><li>Don't spend too much time working on something before raising an issue for it. There might be suggestions I can give, or reasons the work might not be appropriate.</li><li>Pull requests are the best way to submit stuff.</li></ul><h3>Development Workflow</h3><p>I generally load Shake up in <code>ghci</code>, starting from the root directory, which has a <code>.ghci</code> file to set things up. Develop, hit <code>:r</code> to reload, then <code>:test</code> to run the test suite.</p><p>Individual test can be run interactively, too:</p><pre><code>$ :main help
+$ :main TEST_NAME test</code></pre><p>Replace <code>TEST_NAME</code> with one of the tests listed.</p><h3>Sandboxes</h3><p>The tests do things like recompilation, which isn't particularly Cabal sandbox friendly. You can run some tests in the sandbox by doing:</p><pre><code>$ cabal sandbox init
+$ cabal install --only-dependencies
+$ cabal repl shake-test
+$ :main TEST_NAME test --no-report</code></pre>
+</div>
+
+<div id="footer">
+    <p>Copyright <a href="https://github.com/ndmitchell">Neil Mitchell</a> 2014</p>
+</div>
+
+</body>
+</html>
