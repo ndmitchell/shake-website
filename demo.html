@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <meta name="viewport" content="width=device-width"></meta>
+        <!-- favicon from http://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
+        <title>Shake Build System</title>
+        <link rel="stylesheet" href="index.css"></link>
+
+
+
+    </head>
+    <body class="page-demo">
+
+<div id="header">
+    <a href="http://shakebuild.com/" id="header-root">Shake build system</a>
+    <a href="index.html" id="header-first">Home</a>
+    <a href="why.html">Why Shake</a>
+    <a href="manual.html">Manual</a>
+    <a href="about.html">About</a>
+</div>
+
+<div id="content"><h1>Getting Started</h1><p>To get started with Shake, you need to:</p><ul><li>Install the <a href="http://www.haskell.org/platform/">Haskell Platform</a>.</li><li>Type <code>cabal update &amp;&amp; cabal install shake</code></li><li>Run <code>shake --demo</code>, which should produce something similar to the trace below.</li></ul><pre>
+<b>% Welcome to the Shake v1.0 demo mode!
+% Detecting machine configuration... done
+ 
+% The Shake demo uses an empty directory, OK to use:
+%     C:\Users<span class="sym">\</span>Neil<span class="sym">\</span><a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shake">shake</a>-demo
+% <span class="sym">[</span>Y/N<span class="sym">]</span> <span class="sym">(</span>then ENTER<span class="sym">)</span>: y
+% Copying files... done
+ 
+% <span class="sym">[</span>1/5<span class="sym">]</span> Building an example project with Shake.
+% Press ENTER to continue:
+% RUNNING: cd C:\Users<span class="sym">\</span>Neil<span class="sym">\</span><a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shake">shake</a>-demo
+% RUNNING: build</b>
+<span class="sym">[</span>1 of 1<span class="sym">]</span> Compiling Main             <span class="sym">(</span> Build.hs, _shake<span class="sym">\</span>Main.o <span class="sym">)</span>
+Linking _shake/build.<a href="http://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:exe">exe</a> ...
+# gcc <span class="sym">(</span>for _build/main.o<span class="sym">)</span>
+# gcc <span class="sym">(</span>for _build/constants.o<span class="sym">)</span>
+# gcc <span class="sym">(</span>for _build/run.<a href="http://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:exe">exe</a><span class="sym">)</span>
+Build completed in 0:04m
+ 
+<b>% <span class="sym">[</span>2/5<span class="sym">]</span> Running the produced example.
+% Press ENTER to continue:
+% RUNNING: _build<span class="sym">\</span>run.<a href="http://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:exe">exe</a></b>
+Hello Shake Users!
+ 
+<b>% <span class="sym">[</span>3/5<span class="sym">]</span> Rebuilding an example project with Shake <span class="sym">(</span>nothing should change<span class="sym">)</span>.
+% Press ENTER to continue:
+% RUNNING: build</b>
+Build completed in 0:01m
+ 
+<b>% <span class="sym">[</span>4/5<span class="sym">]</span> Cleaning the build.
+% Press ENTER to continue:
+% RUNNING: build clean</b>
+Cleaning files in _build
+Build completed in 0:01m
+ 
+<b>% <span class="sym">[</span>5/5<span class="sym">]</span> Rebuilding with 2 threads and profiling.
+% Press ENTER to continue:
+% RUNNING: build -j2 --report --report=-</b>
+# gcc <span class="sym">(</span>for _build/constants.o<span class="sym">)</span>
+# gcc <span class="sym">(</span>for _build/main.o<span class="sym">)</span>
+# gcc <span class="sym">(</span>for _build/run.<a href="http://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:exe">exe</a><span class="sym">)</span>
+Writing report to report.html
+Writing report to -
+* This database has tracked 1 runs.
+* There are 7 rules <span class="sym">(</span>7 rebuilt in the last run<span class="sym">)</span>.
+* Building required 3 <a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:traced">traced</a> commands <span class="sym">(</span>3 in the last run<span class="sym">)</span>.
+* The total <span class="sym">(</span>unparallelised<span class="sym">)</span> time is 4.15s of which 4.14s is <a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:traced">traced</a> commands.
+* The longest <a href="http://hackage.haskell.org/package/shake/docs/Development-Shake-Rule.html#v:rule">rule</a> takes 1.55s <span class="sym">(</span>_build/main.o<span class="sym">)</span>, and the longest <a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:traced">traced</a> <a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:command">command</a>
+takes 1.54s <span class="sym">(</span>gcc<span class="sym">)</span>.
+* Last run gave an average parallelism of 1.56 times over 2.66s.
+Build completed in 0:03m
+ 
+<b>% See the profiling summary above, or look at the HTML profile report in
+%     C:\Users<span class="sym">\</span>Neil<span class="sym">\</span><a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shake">shake</a>-demo<span class="sym">\</span>report.html
+ 
+% Demo complete - all the examples can be run from:
+%     C:\Users<span class="sym">\</span>Neil<span class="sym">\</span><a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shake">shake</a>-demo
+% For more info see <a href="http://www.shakebuild.com/">http://www.shakebuild.com/</a>
+ 
+% PS. Shake can also execute Ninja build files
+% For more info see <a href="http://www.shakebuild.com/ninja/">http://www.shakebuild.com/ninja/</a></b>
+</pre></div><p id="footer">
+    Questions? Feedback? <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>. Collaborate through <a href="https://github.com/ndmitchell/shake">GitHub</a>.
+</p>
+
+</body>
+</html>

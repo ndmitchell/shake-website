@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <meta name="viewport" content="width=device-width"></meta>
+        <!-- favicon from http://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
+        <title>Shake Build System</title>
+        <link rel="stylesheet" href="index.css"></link>
+
+
+
+    </head>
+    <body class="page-about">
+
+<div id="header">
+    <a href="http://shakebuild.com/" id="header-root">Shake build system</a>
+    <a href="index.html" id="header-first">Home</a>
+    <a href="why.html">Why Shake</a>
+    <a href="manual.html">Manual</a>
+    <a class="active" href="about.html">About</a>
+</div>
+
+<div id="content"><div id="toc"><a class="h2" href="#technical-details">Technical Details</a><a class="h2" href="#philosophy">Philosophy</a><a class="h2" href="#history">History</a></div><h1>Background information</h1><p>This page gives a technical summary of Shake, some of the philosophy behind Shake today, and also some of the history. The information might be interesting, but not necessarily useful.</p><span class="target" id="technical-details"></span><h2>Technical Details</h2><p>Shake build systems are Haskell programs that make heavy use of the <code><a href="http://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shake">shake</a></code> library. While Shake build systems are Haskell programs, they can be treated as a powerful version of make with slightly funny syntax. The build system requires no significant Haskell knowledge, and is designed so that most features are accessible by learning the &quot;Shake syntax&quot;, without any appreciation of what the underlying Haskell means. The main technical innovations over other build systems are:</p><ul><li>A Haskell domain-specific language, meaning you can reuse the Haskell packaging/abstraction mechanisms.</li><li><a href="http://neilmitchell.blogspot.co.uk/2014/07/applicative-vs-monadic-build-systems.html">Monadic dependencies</a>, allowing new dependencies to be discovered after examining previous dependencies.</li><li>Polymorphic dependencies, allowing dependencies on things other than files.</li><li>Dependencies that rebuild but don't change don't cause more things to rebuild.</li></ul><p>Much of the theory behind Shake is covered in <a href="http://community.haskell.org/~ndm/downloads/paper-shake_before_building-10_sep_2012.pdf">a conference paper</a> which was accompanied by the following video:</p><center>
+<iframe width="420" height="315" src="http://www.youtube.com/embed/xYCPpXVlqFM" frameborder="0" allowfullscreen>
+</iframe>
+</center><span class="target" id="philosophy"></span><h2>Philosophy</h2><p>Shake is designed to give the user lots of power. The idea is to make it easy to express things directly and clearly, without having to &quot;encode&quot; the problem in a way the build system can understand. Hopefully by expressing things directly, the result is more likely to do what you expect, and consequently be more robust.</p><p>On top of that power, we want build systems to be fast. The hope is that expressing things clearly lets the build system access all the information and thus go faster, but sometimes that doesn't work out. Where speed and power are in conflict, we try and tread a delicate line.</p><p>Finally, a lot of attention has been given to the engineering and code quality. Shake is well engineered, with a comprehensive test suite and good test coverage.</p><span class="target" id="history"></span><h2>History</h2><p>I was one of the people behind the <a href="https://www.haskell.org/haskellwiki/Yhc">Yhc project</a>, a Haskell compiler that died in a large part because of its build system. To quote from <a href="http://yhc06.blogspot.co.uk/2011/04/yhc-is-dead.html">the final blog post</a>:</p><blockquote><p>The biggest challenge for Yhc was the build system - we ended up with 10,000 lines of Python Scons scripts. Without a robust build system nothing else matters. When our sole Python hacker left the team that was the beginning of the end.</p></blockquote><p>A Haskell compiler is a big undertaking, but the build system for a simple Haskell compiler shouldn't be that complicated.</p><p>When writing my thesis I needed a build system, and decided to try writing a simple Haskell DSL, which is still online <a href="https://github.com/ndmitchell/thesis/blob/master/old/Main.hs">here</a>. I defined a single operator <a href="https://github.com/ndmitchell/thesis/blob/master/old/Main.hs#L71"><code>&lt;==</code></a> which let me express a relationship between an output and its dependencies - very simple, but it worked.</p><p>Later I moved to <a href="http://www.sc.com/">Standard Chartered</a>, where the build system was a mass of Makefiles, and it quickly became apparent that the project had outgrown the current approach. Without really surveying the alternatives, I decided that a Haskell DSL would be easiest to fit in with the existing infrastructure, so started writing some code. The first version of the build library took under a week, followed by a month of reimplementing the existing system. It wasn't until many months later I realised that the reason everything was suddenly so much easier was because we had monadic dependencies.</p><p>While people at Standard Chartered wanted to open source Shake, that turned out not to be possible. A number of people in the Haskell community implemented their own versions of Shake, but none were as polished or as strong as our internal one. Eventually, I reimplemented Shake, from scratch, in my spare time. Writing Shake from scratch, without the original source code or documentation, it naturally turned out better than the first attempt. A while later Standard Chartered migrated to the open-source version.</p></div><p id="footer">
+    Questions? Feedback? <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>. Collaborate through <a href="https://github.com/ndmitchell/shake">GitHub</a>.
+</p>
+
+</body>
+</html>
