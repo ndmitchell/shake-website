@@ -186,6 +186,9 @@ pre {
     padding: 4px;
     overflow-x: auto;
 }
+img {
+    overflow-x: auto;
+}
 .key {color: blue;}
 .sym {color: red;}
 .str {color: teal;}
