@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <meta name="viewport" content="width=device-width"></meta>
+        <!-- favicon from http://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
+        <title>Shake Build System</title>
+        <link rel="stylesheet" href="index.css"></link>
+
+
+
+    </head>
+    <body class="page-faq">
+
+<div id="header">
+    <a href="http://shakebuild.com" id="header-root">Shake build system</a>
+    <a href="." id="header-first">Home</a>
+    <a href="why">Why Shake</a>
+    <a href="manual">Manual</a>
+    <a class="active" href="faq">FAQ</a>
+</div>
+
+<div id="content"><h1>FAQ</h1>
+<span class="target" id="what-else-is-on-this-website"></span><h4><a href="#what-else-is-on-this-website" class="anchor">Q: What else is on this website?</a></h4>
+<ul><li><a href="./manual">User manual</a> - the place to start, which also serves as a tutorial.</li>
+<li><a href="./why">Why</a> - details on why you should use Shake, for those who are easily influenced.</li>
+<li><a href="./includes">Includes</a> - how to deal with <code>#include</code> files, import statements and other dependencies between files.</li>
+<li><a href="./profiling">Profiling and optimisation</a> - how to speed up an existing Shake build system.</li>
+<li><a href="./commandline">Command line flags</a> - the flags and settings supported by Shake, a better version of <code>--help</code>.</li>
+<li><a href="./developing">Developing Shake</a> - notes for people who want to contribute to Shake itself.</li>
+<li><a href="./ninja">Ninja</a> - features of Shake for those people who use Ninja.</li>
+</ul>
+<!--
+Shake is suitable for all sizes of build systems, from a simple C project to a huge cross-platform multi-language project. However, at different scales, different techniques tend to be applicable.
+* [Small/simple build systems](Small.md#readme) - some simpler build systems can be written as _forward_ build systems, without the need to explicitly think about dependencies or targets. Useful for getting started, relies on a tool to automatically track your dependencies.
+* [Large frequently changing build systems](Large.md#readme) - for large build systems, it is useful to split the build system interpreter and metadata apart, making changes to the Haskell build system comparatively rare.
+--><span class="target" id="any-more-documentation"></span><h4><a href="#any-more-documentation" class="anchor">Q: Any more documentation?</a></h4>
+<p>There is a complete list of <a href="https://hackage.haskell.org/packages/archive/shake/latest/doc/html/Development-Shake.html">every function in Shake</a> which <a href="http://hoogle.haskell.org/?package=shake">can be searched</a>. Each function comes with documentation and examples.</p>
+<p>Much of the theory behind Shake is covered in <a href="http://ndmitchell.com/downloads/paper-shake_before_building-10_sep_2012.pdf">a conference paper</a> which was accompanied by <a href="https://www.youtube.com/xYCPpXVlqFM">this video</a> (<a href="http://ndmitchell.com/downloads/slides-shake_before_building-10_sep_2012.pdf">slides</a>). Since then I've given videoed talks on <a href="http://www.infoq.com/presentations/shake">small worked examples</a> (<a href="http://ndmitchell.com/downloads/slides-building_stuff_with_shake-20_nov_2014.pdf">slides</a>) and <a href="https://skillsmatter.com/skillscasts/6548-defining-your-own-build-system-with-shake">how to structure large Shake systems</a> (<a href="http://ndmitchell.com/downloads/slides-defining_your_own_build_system_with_shake-09_oct_2015.pdf">slides</a>).</p>
+<p>I sometimes write about ongoing development work or other Shake-related things on <a href="http://neilmitchell.blogspot.co.uk/search/label/shake">my blog</a>.</p>
+<p>If you have any further questions:</p>
+<ul><li><a href="https://stackoverflow.com/questions/tagged/shake-build-system">Ask on StackOverflow</a>, using the tag <code>shake-build-system</code>.</li>
+<li><a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a> for any questions/bugs/thoughts on Shake. If you need more information and aren't sure where to start, use the mailing list.</li>
+</ul>
+<span class="target" id="is-shake-limited-to-building-haskell"></span><h4><a href="#is-shake-limited-to-building-haskell" class="anchor">Q: Is Shake limited to building Haskell?</a></h4>
+<p>Not at all - Shake can build any project in any combination of languages. In fact, Shake isn't typically necessary for vanilla Haskell projects, as you can use <a href="https://haskell.org/cabal"><code>cabal</code></a> or <a href="http://haskellstack.org/"><code>stack</code></a>. Shake is often used for building C/C++, Docker containers and Javascript/HTML/CSS projects.</p>
+<span class="target" id="where-are-functions-for-string-manipulation"></span><h4><a href="#where-are-functions-for-string-manipulation" class="anchor">Q: Where are functions for string manipulation?</a></h4>
+<p>Shake is a Haskell package focused on providing build-system functionality. Since Shake scripts are written in Haskell, they can easily access other Haskell packages. Most general needs are met by the standard <a href="https://hackage.haskell.org/package/base"><code>base</code> library</a>, but a few other useful general functions can be found in <a href="https://hackage.haskell.org/package/extra">the <code>extra</code> library</a> (e.g. <a href="https://hackage.haskell.org/package/extra/docs/Data-List-Extra.html#v:trim"><code>trim</code></a> and <a href="https://hackage.haskell.org/package/extra/docs/Data-List-Extra.html#v:replace"><code>replace</code></a>). For more specific functionality (e.g. parsing, databases, JSON) find a <a href="https://hackage.haskell.org/packages">suitable Haskell library</a> and use that.</p>
+<span class="target" id="why-is-there-a-shake-executable"></span><h4><a href="#why-is-there-a-shake-executable" class="anchor">Q: Why is there a <code>shake</code> executable?</a></h4>
+<p>Most users will write their own Haskell file and compile it to produce an executable that is their build tool. The <code>shake</code> executable is there to <a href="./demo">run the demo</a>, run <a href="./ninja">Ninja build files</a> and will also run a <code>Shakefile.hs</code> if present. (The <code>shake</code> executable can also run a very small subset Makefiles - but more as a demo, not a supported feature.)</p>
+<span class="target" id="can-file-patterns-overlap"></span><h4><a href="#can-file-patterns-overlap" class="anchor">Q: Can file patterns overlap?</a></h4>
+<p>No. If two patterns overlap for a file being built it will result in a runtime error - you cannot have a pattern for <code>*.txt</code>, and another for <code>foo.*</code>, and then build a file named <code>foo.txt</code>. For objects that typically share the same extension (e.g. C and Haskell both produce <code>.o</code> objects), either disambiguate with a different extension (e.g. <code>.c.o</code> and <code>.hs.o</code>), or different directory (e.g. <code>obj/c/**/.o</code> and <code>obj/hs/**.o</code>). For more information, including ways to enable overlap and set priorities, see <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:-37--62-">%&gt;</a></code>.</p>
+<span class="target" id="why-do-multiple-calls-to-need-run-sequentially"></span><h4><a href="#why-do-multiple-calls-to-need-run-sequentially" class="anchor">Q: Why do multiple calls to <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> run sequentially? Are <code>Applicative</code> actions run in parallel?</a></h4>
+<p>In Shake, <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a> xs &gt;&gt; <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a> ys</code> will build <code>xs</code> in parallel, then afterwards build <code>ys</code> in parallel. The same is true of <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a> xs *&gt; <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a> ys</code>, where <code>*&gt;</code> is the applicative equivalent of <code>&gt;&gt;</code>. In contrast, <a href="https://hackage.haskell.org/package/haxl">Haxl</a> will execute both arguments to <code>*&gt;</code> in parallel. For Shake, you are encouraged to merge adjacent <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> operations (e.g. <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a> <span class="sym">(</span>xs++ys<span class="sym">)</span></code>), and where that is not possible (e.g. when using <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:askOracle">askOracle</a></code>) use <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:parallel">parallel</a></code> explicitly.</p>
+<p>Shake <i>could</i> follow the Haxl approach, but does not, mainly because they are targeting different problems. In Haxl, the operations are typically read-only, and any single step is likely to involve lots of operations. In contrast, with Shake the operations definitely change the file system, and there are typically only one or two per rule. Consequently, Shake opts for an explicit approach, rather than allow users to use <code>*&gt;</code> (and then inevitably add a comment because its an unusual thing to do).</p>
+<span class="target" id="whats-the-history-of-shake"></span><h4><a href="#whats-the-history-of-shake" class="anchor">Q: What's the history of Shake?</a></h4>
+<p>I (<a href="http://ndmitchell.com">Neil Mitchell</a>) was one of the people behind the <a href="https://www.haskell.org/haskellwiki/Yhc">Yhc project</a>, a Haskell compiler that died in a large part because of its build system. To quote from <a href="http://yhc06.blogspot.co.uk/2011/04/yhc-is-dead.html">the final blog post</a>:</p>
+<blockquote><p>The biggest challenge for Yhc was the build system - we ended up with 10,000 lines of Python Scons scripts. Without a robust build system nothing else matters. When our sole Python hacker left the team that was the beginning of the end.</p>
+</blockquote><p>A Haskell compiler is a big undertaking, but the build system for a simple Haskell compiler shouldn't be that complicated.</p>
+<p>When writing my thesis I needed a build system, and decided to try writing a simple Haskell DSL, which is still online <a href="https://github.com/ndmitchell/thesis/blob/master/old/Main.hs">here</a>. I defined a single operator <a href="https://github.com/ndmitchell/thesis/blob/master/old/Main.hs#L71"><code>&lt;==</code></a> which let me express a relationship between an output and its dependencies - very simple, but it worked.</p>
+<p>Later I moved to <a href="https://www.sc.com/">Standard Chartered</a>, where the build system was a mass of Makefiles, and it quickly became apparent that the project had outgrown the current approach. Without really surveying the alternatives, I decided that a Haskell DSL would be easiest to fit in with the existing infrastructure, so started writing some code. The first version of the build library took under a week, followed by a month of reimplementing the existing system. It wasn't until many months later I realised that the reason everything was suddenly so much easier was because we had monadic dependencies.</p>
+<p>While people at Standard Chartered wanted to open source Shake, that turned out not to be possible. A number of people in the Haskell community implemented their own versions of Shake, but none were as polished or as strong as our internal one. Eventually, I reimplemented Shake, from scratch, in my spare time. Writing Shake from scratch, without the original source code or documentation, it naturally turned out better than the first attempt. A while later Standard Chartered migrated to the open-source version.</p>
+<p>I still maintain Shake, but am fortunate to have <a href="https://github.com/ndmitchell/shake/graphs">other contributors</a> extending and improving Shake. If you want to join in, see <a href="./developing">notes for developers</a>.</p>
+</div><p id="footer">
+    Questions? Feedback?
+    <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>.
+    Collaborate through <a href="https://github.com/ndmitchell/shake">GitHub</a>.
+    Ask at <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a>.
+</p>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-286191-4', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
