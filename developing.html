@@ -35,7 +35,7 @@ $ :main TEST_NAME test</code></pre>
 <p>Replace <code>TEST_NAME</code> with one of the tests listed.</p>
 <p>I usually use <a href="https://github.com/ndmitchell/ghcid#readme"><code>ghcid</code></a> when developing Shake.</p>
 <span class="target" id="continuous-integration"></span><h3><a href="#continuous-integration" class="anchor">Continuous Integration</a></h3>
-<p>Shake is currently tested by on Linux by <a href="https://travis-ci.org/ndmitchell/shake">Travis</a>, and on Windows by <a href="https://ci.appveyor.com/project/ndmitchell/shake">Appveyor</a>. The tests are designed to be aggressively comprehensive (testing things like performance and that documentation all type checks), so while they usually pass, do not be overly concerned if they are failing or if your patch breaks a test - serious issues will be spotted very quickly.</p>
+<p>Shake is currently tested by on Linux by <a href="https://travis-ci.org/ndmitchell/shake">Travis</a>, and on Windows by <a href="https://ci.appveyor.com/project/ndmitchell/shake">Appveyor</a>. The tests are designed to be aggressively comprehensive (testing things like performance and that documentation all type checks), so while they usually pass, do not be overly concerned if they are failing or if your patch breaks a test &ndash; serious issues will be spotted very quickly.</p>
 <span class="target" id="sandboxes"></span><h3><a href="#sandboxes" class="anchor">Sandboxes</a></h3>
 <p>The tests do things like recompilation, which isn't particularly Cabal sandbox friendly. You can run some tests in the sandbox by doing:</p>
 <pre>$ cabal sandbox init

@@ -23,13 +23,13 @@
 </div>
 
 <div id="content"><div id="toc"><a class="h2" href="#using-shake">Using Shake</a><a class="h2" href="#asking-questions">Asking questions</a><a class="h2" href="#what-else">What else?</a><a class="h2" href="#who-uses-shake">Who uses Shake?</a></div><h1>Shake is...</h1>
-<ul><li><b>A build system</b> - an alternative to make, Scons, Ant etc.</li>
-<li><b>Reliable and robust</b> - having been relied on commercially for over five years.</li>
-<li><b>Powerful</b> - letting you express the problem precisely and directly.</li>
-<li><b>Fast to run</b> - both to build from scratch and to rebuild.</li>
+<ul><li><b>A build system</b> &ndash; an alternative to make, Scons, Ant etc.</li>
+<li><b>Reliable and robust</b> &ndash; having been relied on commercially for over five years.</li>
+<li><b>Powerful</b> &ndash; letting you express the problem precisely and directly.</li>
+<li><b>Fast to run</b> &ndash; both to build from scratch and to rebuild.</li>
 </ul>
 <p>Large build systems written using Shake tend to be significantly simpler, while also running faster. If your project can use a canned build system (e.g. Visual Studio, cabal) do that; if your project is very simple use a Makefile; otherwise use Shake.</p>
-<p>The original motivation behind the creation of Shake was to allow rules to discover additional dependencies after running previous rules, allowing the build system to generate files and then examine them to determine their dependencies - something that cannot be expressed directly in most build systems. However, now Shake is a suitable build tool even if you do not require that feature.</p>
+<p>The original motivation behind the creation of Shake was to allow rules to discover additional dependencies after running previous rules, allowing the build system to generate files and then examine them to determine their dependencies &ndash; something that cannot be expressed directly in most build systems. However, now Shake is a suitable build tool even if you do not require that feature.</p>
 <p><a href="./why">Click to read about why you should use Shake.</a></p>
 <span class="target" id="using-shake"></span><h2><a href="#using-shake" class="anchor">Using Shake</a></h2>
 <p>To try Shake you need to install the <a href="http://haskellstack.org/">Haskell Stack</a>, then type <code>stack install shake</code>, then run <code>stack exec -- shake --demo</code>. The final step will create a sample Shake build system and run it (you should see <a href="./demo">this output</a>).</p>

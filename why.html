@@ -24,8 +24,8 @@
 
 <div id="content"><h1>Why choose Shake?</h1>
 <p>Shake is a library for writing build systems. Most large projects have a custom-written build system, and developers working on the project are likely to run the build system many times a day, spending a noticeable amount of time <a href="http://xkcd.com/303/">waiting for the build system</a>. This document explains why you might pick Shake over alternative tools for writing build systems (e.g. make, Ant, Scons). Shake primarily benefits two groups of people:</p>
-<ul><li><b>Developers running the build system</b> - Shake based build systems run quickly, require little manual intervention and report estimated completion time as they go.</li>
-<li><b>Developers writing the build system</b> - Shake provides a powerful language for writing build systems, has excellent support for writing large robust build systems, can express many types of build rules and provides profiling information to help speed up builds.</li>
+<ul><li><b>Developers running the build system</b> &ndash; Shake based build systems run quickly, require little manual intervention and report estimated completion time as they go.</li>
+<li><b>Developers writing the build system</b> &ndash; Shake provides a powerful language for writing build systems, has excellent support for writing large robust build systems, can express many types of build rules and provides profiling information to help speed up builds.</li>
 </ul>
 <p>In the rest of this document we explain and justify the above claims. Shake combines <a href="http://ndmitchell.com/downloads/paper-shake_before_building-10_sep_2012.pdf">cutting edge research</a> with a <a href="https://hackage.haskell.org/package/shake/">robust industrial-quality implementation</a>. Shake is in constant use at many large organisations, including <a href="http://sc.com/">a large investment bank</a>, where it was originally developed and has been in use since 2009.</p>
 <span class="target" id="expresses-many-types-of-build-rule"></span><h4><a href="#expresses-many-types-of-build-rule" class="anchor">Expresses many types of build rule</a></h4>
@@ -35,7 +35,7 @@
 </ul>
 <span class="target" id="build-systems-run-quickly"></span><h4><a href="#build-systems-run-quickly" class="anchor">Build systems run quickly</a></h4>
 <p>Developers are likely to spend a long time waiting for their build system, and consequently Shake is designed to be fast.</p>
-<ul><li>The Shake implementation itself is highly optimised, in common with many build tools. In particular, Shake is designed for especially fast execution when nothing has changed -- a common case when developing.</li>
+<ul><li>The Shake implementation itself is highly optimised, in common with many build tools. In particular, Shake is designed for especially fast execution when nothing has changed &ndash; a common case when developing.</li>
 <li>Shake benefits from its powerful dependencies, which can be more accurate and fine-grained, thus ensuring it only builds what is really necessary.</li>
 <li>Shake has excellent support for parallelism, fully utilising multicore machines. Shake also supports resource constraints, allowing builds to run with a higher level of parallelism than would otherwise be possible. As an example, you can limit disk-intensive operations (e.g. linking) without restricting CPU-intensive operations (e.g. compiling).</li>
 <li>Shake avoids rebuilding results where the dependencies are rebuilt but do not change, which is particularly useful for generated source files. The impact can reduce certain common patterns from build times of hours to build times of seconds.</li>
