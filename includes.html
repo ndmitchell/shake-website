@@ -40,7 +40,7 @@
 <p>This function takes the source code of a C file (<code>src</code>) and finds all lines that begin <code>#include <span class="str">&quot;</span></code>, then takes the filename afterwards. This function does not work for all C files, but for most projects it is usually easy to write such a function that covers everything allowed by your coding standards.</p>
 <p>Assuming all interesting headers are only included directly by the C file (a restriction we remove in the next section), we can write the build rule as:</p>
 <pre><span class="str">&quot;_build//*.o&quot;</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:-37--62-">%&gt;</a> <span class="sym">\</span>out <span class="sym">-&gt;</span> <span class="key">do</span>
-    <span class="key">let</span> c <span class="sym">=</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:dropDirectory1">dropDirectory1</a> $ out <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:-45--60-.-62-">-&lt;.&gt;</a> <span class="str">&quot;c&quot;</span>
+    <span class="key">let</span> c <span class="sym">=</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:dropDirectory1">dropDirectory1</a> $ out -&lt;.&gt; <span class="str">&quot;c&quot;</span>
     src <span class="sym">&lt;-</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:readFile'">readFile'</a> c
     <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a> $ usedHeaders src
     <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:cmd">cmd</a> <span class="str">&quot;gcc -c&quot;</span> <span class="sym">[</span>c<span class="sym">]</span> <span class="str">&quot;-o&quot;</span> <span class="sym">[</span>out<span class="sym">]</span></code></pre>
@@ -52,12 +52,12 @@
     <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:writeFileLines">writeFileLines</a> out $ usedHeaders src
 
 <span class="str">&quot;*.deps&quot;</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:-37--62-">%&gt;</a> <span class="sym">\</span>out <span class="sym">-&gt;</span> <span class="key">do</span>
-    dep <span class="sym">&lt;-</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:readFileLines">readFileLines</a> $ out <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:-45--60-.-62-">-&lt;.&gt;</a> <span class="str">&quot;dep&quot;</span>
+    dep <span class="sym">&lt;-</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:readFileLines">readFileLines</a> $ out -&lt;.&gt; <span class="str">&quot;dep&quot;</span>
     deps <span class="sym">&lt;-</span> mapM <span class="sym">(</span><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:readFileLines">readFileLines</a> . <span class="sym">(</span>&lt;.&gt; <span class="str">&quot;deps&quot;</span><span class="sym">)</span><span class="sym">)</span> dep
     <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:writeFileLines">writeFileLines</a> out $ nub $ dropExtension out : concat deps
 
 <span class="str">&quot;*.o&quot;</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:-37--62-">%&gt;</a> <span class="sym">\</span>out <span class="sym">-&gt;</span> <span class="key">do</span>
-    deps <span class="sym">&lt;-</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:readFileLines">readFileLines</a> $ out <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:-45--60-.-62-">-&lt;.&gt;</a> <span class="str">&quot;c.deps&quot;</span>
+    deps <span class="sym">&lt;-</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:readFileLines">readFileLines</a> $ out -&lt;.&gt; <span class="str">&quot;c.deps&quot;</span>
     <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a> deps
     <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:cmd">cmd</a> <span class="str">&quot;gcc -c&quot;</span> <span class="sym">[</span>dropExtension out<span class="sym">]</span> <span class="str">&quot;-o&quot;</span> out</code></pre>
 <p>For simplicity, this code assumes all files are in a single directory and all objects are generated files are placed in the same directory. We define three rules:</p>
