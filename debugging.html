@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <meta name="viewport" content="width=device-width"></meta>
+        <!-- favicon from http://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
+        <title>Shake Build System</title>
+        <link rel="stylesheet" href="index.css"></link>
+
+
+
+    </head>
+    <body class="page-debugging">
+
+<div id="header">
+    <a href="http://shakebuild.com" id="header-root">Shake build system</a>
+    <a href="." id="header-first">Home</a>
+    <a href="why">Why Shake</a>
+    <a href="manual">Manual</a>
+    <a href="faq">FAQ</a>
+</div>
+
+<div id="content"><div id="toc"><a class="h2" href="#raises-an-error">Raises an error</a><a class="h2" href="#command-line-does-the-wrong-thing">Command line does the wrong thing</a><a class="h2" href="#weird-things-are-rebuilding">Weird things are rebuilding</a></div><h1>Debugging</h1>
+<p>This page discusses how to debug a Shake-based build system &ndash; how to determine why it is going wrong. The page is presented as a series of common problems and how they can be investigated. The common techniques for solving any Shake problem are:</p>
+<ul><li>Switch to single-threaded operation, using <code>-j1</code>. While concurrency is rarely the cause of the bugs, it often makes the diagnostic messages easier to interpret, and makes reproduction more deterministic.</li>
+<li>Turn on <code>--lint</code>, which will check for a number of common mistakes.</li>
+<li>Turn up the verbosity level <code>-v</code> will print all command lines, <code>-vv</code> will print even more, and <code>-vvv</code> gives a super-detailed commentary on everything that happens (usually for debugging Shake itself).</li>
+<li>If you use <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shakeArgs">shakeArgs</a></code> then every rule can be built individually, e.g. <code>my-build-system dir/output_that_fails.txt</code>. Reducing the error can allow higher levels of verbosity.</li>
+<li>If you are still stuck, ask on <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a> using the tag <code>shake-build-system</code>.</li>
+</ul>
+<span class="target" id="raises-an-error"></span><h2><a href="#raises-an-error" class="anchor">Raises an error</a></h2>
+<p>Most Shake errors are formatted as:</p>
+<pre>Error when running Shake build system:
+* stack_element1.txt
+* stack_eLement2.txt
+* real_file.o
+Error, rule failed to build file:
+  real_rile.o</code></pre>
+<p>The lines starting with <code>*</code> provide a stack trace, where <code>stack_element1.txt</code> depended on <code>stack_element2.txt</code>, which in turn depended on and ran the rule for <code>real_file.o</code>. The specific error in this example is that the rule for producing <code>real_file.o</code> failed to actually create the file - either the file was not created, or was creating in the wrong place.</p>
+<p>All Shake errors contain the dependency stack, which is usually the most important thing about diagnosing an error. Often the first step is to map the bottom entry on the stack to the rule that executes to produce it - e.g. <code>*.o</code> or similar.</p>
+<p>Some typical errors you may encounter are:</p>
+<ul><li><b>recursion detected</b> - when a build system, through a series of dependencies, ends up depending on itself &ndash; usually the stack makes it clear where the surprise is. Occasionally you will get an error about <b>indirect</b> recursion, in which case rebuild with <code>-j1</code> and it will often give a better stack trace.</li>
+<li><b>file does not exist and no rule available</b> - occurs when you have done <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> on a file such as <code>file.o</code>, but there is no pattern that matches (e.g. no <code>*.o</code> rule), and the file is not a source file (which do not need explicit patterns). Usual solution is to add a pattern that builds the artefact.</li>
+<li><b>key matches multiple rules</b> - occurs when you multiple patterns that match a single file, which is not allowed - try making your rules more specific so they are disjoint.</li>
+<li><b>system command failed</b> - occurs when you run a system command using <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:cmd">cmd</a></code>, not capturing the <code>ExitCode</code>, and it either fails to start or returns a non-zero exit code. The next line should contain the system command and arguments.</li>
+</ul>
+<span class="target" id="command-line-does-the-wrong-thing"></span><h2><a href="#command-line-does-the-wrong-thing" class="anchor">Command line does the wrong thing</a></h2>
+<p>Since build systems typically spend most of their time calling out to command line tools, much of the debugging effort is around getting these tools to behave properly. The easiest way to debug a system command is to avoid it entirely - tools like <code>rm</code>, <code>cat</code> and <code>sed</code> can usually be replaced with Haskell code, which can fix issues and improve portability.</p>
+<p>The first step to debugging a command line tool is to reproduce the error outside of Shake, typically by passing <code>-v</code> to see the command line and pasting it into a shell. Unfortunately all the platform abstractions can sometimes get in the way, in particular pay attention to:</p>
+<ul><li>Quoting, especially on Windows, where the conventions are difficult to fathom.</li>
+<li>What the command is wrapped in - specifically <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:Shell">Shell</a></code> causes the command to be run through <code>sh</code>/<code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:cmd">cmd</a></code>, anything such as <code>stack exec</code> can also add translation layers.</li>
+<li>Environment issues such as current directory and environment variables.</li>
+<li>Any output flags, such as <code>-o</code>, to control where the output goes.</li>
+<li>Precise details - things like using a short flag vs long flag, ordering of flags etc. can all have an impact.</li>
+</ul>
+<p>Alas, each tool is different, and all present unique challenges. Where possible copy the command lines from other systems, rather than trying to rediscover this arcane knowledge.</p>
+<span class="target" id="weird-things-are-rebuilding"></span><h2><a href="#weird-things-are-rebuilding" class="anchor">Weird things are rebuilding</a></h2>
+<p>See the <a href="./profiling#html-profile">HTML Profile Reports</a>, which provide overviews of dependencies. These can be mined to figure out the causes of rebuilding.</p>
+</div><p id="footer">
+    Questions? Feedback?
+    <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>.
+    Collaborate through <a href="https://github.com/ndmitchell/shake">GitHub</a>.
+    Ask at <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a>.
+</p>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-286191-4', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
