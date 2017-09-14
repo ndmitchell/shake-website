@@ -27,7 +27,7 @@
 <ul><li>Switch to single-threaded operation, using <code>-j1</code>. While concurrency is rarely the cause of the bugs, it often makes the diagnostic messages easier to interpret, and makes reproduction more deterministic.</li>
 <li>Turn on <code>--lint</code>, which will check for a number of common mistakes.</li>
 <li>Turn up the verbosity level <code>-v</code> will print all command lines, <code>-vv</code> will print even more, and <code>-vvv</code> gives a super-detailed commentary on everything that happens (usually for debugging Shake itself).</li>
-<li>If you use <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shakeArgs">shakeArgs</a></code> then every rule can be built individually, e.g. <code>my-build-system dir/output_that_fails.txt</code>. Reducing the error can allow higher levels of verbosity.</li>
+<li>If you use <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shakeArgs">shakeArgs</a></code> then every rule can be built individually, e.g. <code>runhaskell MyShakeFile.hs foo/output_that_fails.txt</code>. Reducing the error can allow higher levels of verbosity.</li>
 <li>If you are still stuck, ask on <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a> using the tag <code>shake-build-system</code>.</li>
 </ul>
 <span class="target" id="raises-an-error"></span><h2><a href="#raises-an-error" class="anchor">Raises an error</a></h2>
