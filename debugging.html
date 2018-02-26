@@ -15,7 +15,7 @@
     <body class="page-debugging">
 
 <div id="header">
-    <a href="http://shakebuild.com" id="header-root">Shake build system</a>
+    <a href="https://shakebuild.com" id="header-root">Shake build system</a>
     <a href="." id="header-first">Home</a>
     <a href="why">Why Shake</a>
     <a href="manual">Manual</a>
@@ -36,7 +36,7 @@
 * stack_element1.txt
 * stack_eLement2.txt
 * real_file.o
-Error, rule failed to build file:
+Error, rule finished running but did not produce file:
   real_rile.o</code></pre>
 <p>The lines starting with <code>*</code> provide a stack trace, where <code>stack_element1.txt</code> depended on <code>stack_element2.txt</code>, which in turn depended on and ran the rule for <code>real_file.o</code>. The specific error in this example is that the rule for producing <code>real_file.o</code> failed to actually create the file - either the file was not created, or was creating in the wrong place.</p>
 <p>All Shake errors contain the dependency stack, which is usually the most important thing about diagnosing an error. Often the first step is to map the bottom entry on the stack to the rule that executes to produce it - e.g. <code>*.o</code> or similar.</p>

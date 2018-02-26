@@ -15,7 +15,7 @@
     <body class="page-index">
 
 <div id="header">
-    <a href="http://shakebuild.com" id="header-root">Shake build system</a>
+    <a href="https://shakebuild.com" id="header-root">Shake build system</a>
     <a class="active" href="." id="header-first">Home</a>
     <a href="why">Why Shake</a>
     <a href="manual">Manual</a>
@@ -32,19 +32,19 @@
 <p>The original motivation behind the creation of Shake was to allow rules to discover additional dependencies after running previous rules, allowing the build system to generate files and then examine them to determine their dependencies &ndash; something that cannot be expressed directly in most build systems. However, now Shake is a suitable build tool even if you do not require that feature.</p>
 <p><a href="./why">Click to read about why you should use Shake.</a></p>
 <span class="target" id="using-shake"></span><h2><a href="#using-shake" class="anchor">Using Shake</a></h2>
-<p>To try Shake you need to install the <a href="http://haskellstack.org/">Haskell Stack</a>, then type <code>stack install shake</code>, then run <code>stack exec -- shake --demo</code>. The final step will create a sample Shake build system and run it (you should see <a href="./demo">this output</a>).</p>
+<p>To try Shake you need to install the <a href="https://haskellstack.org/">Haskell Stack</a>, then type <code>stack install shake</code>, then run <code>stack exec -- shake --demo</code>. The final step will create a sample Shake build system and run it (you should see <a href="./demo">this output</a>).</p>
 <p>To write your own Shake build system, read the <a href="./manual">user manual</a> and refer to the <a href="https://hackage.haskell.org/packages/archive/shake/latest/doc/html/Development-Shake.html">API documentation</a>. Further documentation on specific topics, including more examples, is available from <a href="./faq">the FAQ</a>. Shake build systems are <a href="https://haskell.org/">Haskell</a> programs, but can be treated as a powerful version of make with slightly funny syntax. The build system requires no significant Haskell knowledge, and is designed so that most features are accessible by learning the &quot;Shake syntax&quot;, without any appreciation of what the underlying Haskell means.</p>
 <p><a href="./manual">Click to read the user manual.</a></p>
 <span class="target" id="asking-questions"></span><h2><a href="#asking-questions" class="anchor">Asking questions</a></h2>
 <p>Stuck? Confused? Frustrated? Please get in contact! If in doubt, just email the <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">mailing list</a>.</p>
-<p>You can ask questions on <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a> using the tag <code>shake-build-system</code>. You can email the <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">mailing list</a> with anything about Shake. If you find a bug you can report it at the <a href="https://github.com/ndmitchell/shake/issues">GitHub issue tracker</a>. If your question needs to remain confidential you can <a href="http://ndmitchell.com/">email me</a>, although any insights from your question won't be public, so the other approaches are preferred.</p>
+<p>You can ask questions on <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a> using the tag <code>shake-build-system</code>. You can email the <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">mailing list</a> with anything about Shake. If you find a bug you can report it at the <a href="https://github.com/ndmitchell/shake/issues">GitHub issue tracker</a>. If your question needs to remain confidential you can <a href="https://ndmitchell.com/">email me</a>, although any insights from your question won't be public, so the other approaches are preferred.</p>
 <span class="target" id="what-else"></span><h2><a href="#what-else" class="anchor">What else?</a></h2>
-<p>Shake can execute <a href="./ninja">Ninja files</a>, allowing integration with <a href="http://www.cmake.org/">CMake</a> and <a href="http://mesonbuild.com/">Meson</a>. Shake can <a href="./manual#progress">predict completion time</a>, <a href="./profiling">profile build systems</a> and <a href="./manual#lint">sanity check builds</a>. Shake is based on a robust underlying theory from <a href="http://ndmitchell.com/downloads/paper-shake_before_building-10_sep_2012.pdf">this academic paper</a>. Shake is an open source project under the <a href="https://github.com/ndmitchell/shake/blob/master/LICENSE">BSD license</a> hosted on <a href="https://github.com/ndmitchell/shake/">GitHub</a> with a <a href="https://github.com/ndmitchell/shake/graphs">range of contributors</a>.</p>
+<p>Shake can execute <a href="./ninja">Ninja files</a>, allowing integration with <a href="https://www.cmake.org/">CMake</a> and <a href="http://mesonbuild.com/">Meson</a>. Shake can <a href="./manual#progress">predict completion time</a>, <a href="./profiling">profile build systems</a> and <a href="./manual#lint">sanity check builds</a>. Shake is based on a robust underlying theory from <a href="https://ndmitchell.com/downloads/paper-shake_before_building-10_sep_2012.pdf">this academic paper</a>. Shake is an open source project under the <a href="https://github.com/ndmitchell/shake/blob/master/LICENSE">BSD license</a> hosted on <a href="https://github.com/ndmitchell/shake/">GitHub</a> with a <a href="https://github.com/ndmitchell/shake/graphs">range of contributors</a>.</p>
 <span class="target" id="who-uses-shake"></span><h2><a href="#who-uses-shake" class="anchor">Who uses Shake?</a></h2>
 <p>Shake is used by lots of companies, but only a few have declared so publicly.</p>
-<ul><li><a href="https://www.standardchartered.com/">Standard Chartered</a> have been using Shake since 2009, as described in the section 6 of the <a href="http://ndmitchell.com/downloads/paper-shake_before_building-10_sep_2012.pdf">academic paper</a>.</li>
-<li><a href="http://www.factisresearch.com/">factis research GmbH</a> use Shake to compile their <a href="http://www.checkpad.de/">Checkpad MED</a> application, as described in their <a href="http://funktionale-programmierung.de/2014/01/16/build-system-haskell.html">blog post</a>.</li>
-<li><a href="http://samplecount.com/">Samplecount</a> have been using Shake since 2012, as mentioned in their <a href="https://twitter.com/samplecount/status/491581551730511872">tweet</a>, producing several <a href="https://github.com/samplecount">open-source projects</a> for working with Shake.</li>
+<ul><li><a href="https://www.standardchartered.com/">Standard Chartered</a> have been using Shake since 2009, as described in the section 6 of the <a href="https://ndmitchell.com/downloads/paper-shake_before_building-10_sep_2012.pdf">academic paper</a>.</li>
+<li><a href="http://www.factisresearch.com/">factis research GmbH</a> use Shake to compile their <a href="https://www.checkpad.de/">Checkpad MED</a> application, as described in their <a href="http://funktionale-programmierung.de/2014/01/16/build-system-haskell.html">blog post</a>.</li>
+<li><a href="https://samplecount.com/">Samplecount</a> have been using Shake since 2012, as mentioned in their <a href="https://twitter.com/samplecount/status/491581551730511872">tweet</a>, producing several <a href="https://github.com/samplecount">open-source projects</a> for working with Shake.</li>
 <li><a href="http://www.covenanteyes.com/">CovenantEyes</a> use Shake to build their Windows client, as mentioned in their <a href="https://twitter.com/eacameron88/status/543219899599163392">tweet</a>.</li>
 <li><a href="http://keystonetowersystems.com/">Keystone Tower Systems</a> has a robotic welder with a Shake build system plus Haskell code running in the control system, as mentioned in their <a href="https://twitter.com/eric_oconnor/status/581576757062434816">tweet</a>.</li>
 <li><a href="https://www.fpcomplete.com/">FP Complete</a> use Shake to <a href="https://www.fpcomplete.com/blog/2015/08/stack-docker#images">create Docker images</a>.</li>
@@ -54,8 +54,8 @@
 <p>There are several libraries providing pre-made rules for Shake:</p>
 <ul><li><a href="https://hackage.haskell.org/package/shake-language-c">shake-language-c</a> allows cross-compiling C, C++ and Objective-C code to various target platforms.</li>
 <li><a href="https://github.com/jfeltz/shake-cpp">shake-cpp</a> is an abstraction layer for Shake, providing simple C++ rules.</li>
-<li><a href="https://hackage.haskell.org/package/kansas-lava-shake">kansas-lava-shake</a> provides a set of rules to work with <a href="https://hackage.haskell.org/package/kansas-lava">Kansas Lava</a> and compile down to <a href="http://www.xilinx.com/">Xilinx chips</a>.</li>
-<li><a href="https://hackage.haskell.org/package/avr-shake">avr-shake</a> provides rules for building things with <a href="http://www.obdev.at/products/crosspack/index.html">AVR Crosspack</a>.</li>
+<li><a href="https://hackage.haskell.org/package/kansas-lava-shake">kansas-lava-shake</a> provides a set of rules to work with <a href="https://hackage.haskell.org/package/kansas-lava">Kansas Lava</a> and compile down to <a href="https://www.xilinx.com/">Xilinx chips</a>.</li>
+<li><a href="https://hackage.haskell.org/package/avr-shake">avr-shake</a> provides rules for building things with <a href="https://www.obdev.at/products/crosspack/index.html">AVR Crosspack</a>.</li>
 <li><a href="https://hackage.haskell.org/package/shake-minify">shake-minify</a> uses native Haskell code (no external <code>$PATH</code> dependencies) to minify CSS and JS files.</li>
 <li><a href="https://hackage.haskell.org/package/shake-pack">shake-pack</a> uses bz2 lib on the system to tar and bzip compress given files.</li>
 </ul>
@@ -71,7 +71,7 @@
 <li><a href="https://github.com/opensuse-haskell">OpenSUSE Haskell packaging</a> makes use of Shake to <a href="https://github.com/opensuse-haskell/cabal2obs">convert a Stack project to OBS</a>.</li>
 </ul>
 <p>And finally, here are a few tutorials and blog posts:</p>
-<ul><li><a href="http://neilmitchell.blogspot.co.uk/search/label/shake">Many articles from the author of Shake</a>, covering ongoing development.</li>
+<ul><li><a href="https://neilmitchell.blogspot.co.uk/search/label/shake">Many articles from the author of Shake</a>, covering ongoing development.</li>
 <li><a href="http://declaredvolatile.org/blog/2014-09-14-writing-a-simple-blog-with-shake-and-pandoc/">Writing a simple Blog with Shake and Pandoc</a>.</li>
 </ul>
 <p>Do you have a link that should be included above? Let me know with a <a href="https://twitter.com/ndm_haskell">tweet to <code>@ndm_haskell</code></a>.</p>
