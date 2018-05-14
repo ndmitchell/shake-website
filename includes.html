@@ -1,10 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8"></meta>
         <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
         <meta name="viewport" content="width=device-width"></meta>
-        <!-- favicon from http://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <!-- favicon from https://findicons.com/icon/445768/blue_lego?id=445922 -->
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
         <title>Shake Build System</title>
         <link rel="stylesheet" href="index.css"></link>
@@ -37,7 +37,7 @@
 <p>The initial example compiles the C file, then calls <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> on all its source and header files. This works fine if the header files are all source code. However, if any of the header files are <i>generated</i> by the build system then when the compilation occurs they will not yet have been built. In general it is important to <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> any generated files <i>before</i> they are used.</p>
 <p>To detect the included headers without using the compiler we can define <code>usedHeaders</code> as a top-level function:</p>
 <pre>usedHeaders src <span class="sym">=</span> <span class="sym">[</span>init x <span class="sym">|</span> x <span class="sym">&lt;-</span> lines src, Just x <span class="sym">&lt;-</span> <span class="sym">[</span>stripPrefix <span class="str">&quot;#include \&quot;&quot;</span> x<span class="sym">]</span><span class="sym">]</span></code></pre>
-<p>This function takes the source code of a C file (<code>src</code>) and finds all lines that begin <code>#include <span class="str">&quot;</span></code>, then takes the filename afterwards. This function does not work for all C files, but for most projects it is usually easy to write such a function that covers everything allowed by your coding standards.</p>
+<p>This function takes the source code of a C file (<code>src</code>) and finds all lines that begin <code>#include <span class="str">&quot;</span></code>, then takes the filename afterwards. This function does not work for all C files, but for most projects it is usually feasible to write such a function that covers everything allowed by your coding standards.</p>
 <p>Assuming all interesting headers are only included directly by the C file (a restriction we remove in the next section), we can write the build rule as:</p>
 <pre><span class="str">&quot;_build//*.o&quot;</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:-37--62-">%&gt;</a> <span class="sym">\</span>out <span class="sym">-&gt;</span> <span class="key">do</span>
     <span class="key">let</span> c <span class="sym">=</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#v:dropDirectory1">dropDirectory1</a> $ out -&lt;.&gt; <span class="str">&quot;c&quot;</span>

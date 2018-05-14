@@ -1,10 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8"></meta>
         <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
         <meta name="viewport" content="width=device-width"></meta>
-        <!-- favicon from http://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <!-- favicon from https://findicons.com/icon/445768/blue_lego?id=445922 -->
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
         <title>Shake Build System</title>
         <link rel="stylesheet" href="index.css"></link>
@@ -193,7 +193,7 @@ main <span class="sym">=</span> <a href="https://hackage.haskell.org/package/sha
 <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:phony">phony</a> <span class="str">&quot;</span><i>name</i><span class="str">&quot;</span> $ <span class="key">do</span>
     <i>actions</i>
 </pre>
-<p>Where <tt><i>name</i></tt> is the name used on the command line to invoke the actions, and <tt><i>actions</i></tt> are the list of things to do in response. These names are not dependency tracked and are simply run afresh each time they are requested.</p>
+<p>Where <tt><i>name</i></tt> is the name used on the command line to invoke the actions, and <tt><i>actions</i></tt> are the list of things to do in response. These names are not dependency tracked and are run afresh each time they are requested.</p>
 <p>The <tt><i>actions</i></tt> can be any standard build actions, although for a <code>clean</code> rule, <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:removeFilesAfter">removeFilesAfter</a></code> is typical. This function waits until after any files have finished building (which will be none, if you do <code>runhaskell Build.hs clean</code>) then deletes all files matching <code>//*</code> in the <code>_build</code> directory. The <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:putNormal">putNormal</a></code> function writes out a message to the console, as long as <code>--quiet</code> was not passed.</p>
 <span class="target" id="running"></span><h2><a href="#running" class="anchor">Running</a></h2>
 <p>This section covers how to run the build system you have written.</p>
@@ -203,7 +203,7 @@ main <span class="sym">=</span> <a href="https://hackage.haskell.org/package/sha
 mkdir -p _shake
 ghc --make Build.hs -rtsopts -threaded -with-rtsopts=-I0 -outputdir=_shake -o _shake/build &amp;&amp; _shake/build &quot;$@&quot;</code></pre>
 <p>This script creates a folder named <code>_shake</code> for the build system objects to live in, then runs <code>ghc --make Build.hs</code> to produce <code>_shake/build</code>, then executes <code>_shake/build</code> with all arguments it was given. The <code>-with-rtsopts</code> flag instructs the Haskell compiler to disable &quot;idle garbage collection&quot;, making more CPU available for the commands you are running, as <a href="https://stackoverflow.com/questions/34588057/why-does-shake-recommend-disabling-idle-garbage-collection/">explained here</a>.</p>
-<p>Now you can run a build by simply typing <code>stack exec ./build.sh</code> on Linux, or <code>stack exec build.bat</code> on Windows. On Linux you may want to alias <code>build</code> to <code>stack exec ./build.sh</code>. For the rest of this document we will assume <code>build</code> runs the build system.</p>
+<p>Now you can run a build by typing <code>stack exec ./build.sh</code> on Linux, or <code>stack exec build.bat</code> on Windows. On Linux you may want to alias <code>build</code> to <code>stack exec ./build.sh</code>. For the rest of this document we will assume <code>build</code> runs the build system.</p>
 <p><i>Warning:</i> You should not use the <code>-threaded</code> for GHC 7.6 or below because of a <a href="https://ghc.haskell.org/trac/ghc/ticket/7646">GHC bug</a>. If you do turn on <code>-threaded</code>, you should include <code>-qg -qb</code> in <code>-with-rtsopts</code>.</p>
 <span class="target" id="command-line-flags"></span><h4><a href="#command-line-flags" class="anchor">Command line flags</a></h4>
 <p>The initial example build system supports a number of command line flags, including:</p>
@@ -219,7 +219,7 @@ ghc --make Build.hs -rtsopts -threaded -with-rtsopts=-I0 -outputdir=_shake -o _s
 <ul><li>Running <code>build --progress</code></li>
 <li>Setting <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shakeOptions">shakeOptions</a><span class="sym">{</span><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:shakeProgress">shakeProgress</a> <span class="sym">=</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:progressSimple">progressSimple</a><span class="sym">}</span></code></li>
 </ul>
-<p>The progress message will be displayed in the titlebar of the window, for example <code>3m12s (82%)</code> to indicate that the build is 82% complete and is predicted to take a further 3 minutes and 12 seconds. If you are running Windows 7 or higher and place the <a href="https://github.org/ndmitchell/shake"><code>shake-progress</code></a> utility somewhere on your <code>%PATH%</code> then the progress will also be displayed in the taskbar progress indicator:</p>
+<p>The progress message will be displayed in the titlebar of the window, for example <code>3m12s (82%)</code> to indicate that the build is 82% complete and is predicted to take a further 3 minutes and 12 seconds. If you are running Windows 7 or higher and place the <a href="https://github.com/ndmitchell/shake/releases/tag/shake-progress-1"><code>shake-progress</code></a> utility somewhere on your <code>%PATH%</code> then the progress will also be displayed in the taskbar progress indicator:</p>
 <p><img src="shake-progress.png" alt></p>
 <p>Progress prediction is likely to be relatively poor during the first build and after running <code>build clean</code>, as then Shake has no information about the predicted execution time for each rule. To rebuild from scratch without running clean (because you really want to see the progress bar!) you can use the argument <code>--always-make</code>, which assumes all rules need rerunning.</p>
 <span class="target" id="lint"></span><span class="target" id="lint"></span><h4><a href="#lint" class="anchor">Lint</a></h4>
@@ -251,7 +251,7 @@ ghc --make Build.hs -rtsopts -threaded -with-rtsopts=-I0 -outputdir=_shake -o _s
 <span class="target" id="dependencies-on-environment-variables"></span><h4><a href="#dependencies-on-environment-variables" class="anchor">Dependencies on environment variables</a></h4>
 <p>You can use tracked dependencies on environment variables using the <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:getEnv">getEnv</a></code> function. As an example:</p>
 <pre>link <span class="sym">&lt;-</span> <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:getEnv">getEnv</a> <span class="str">&quot;C_LINK_FLAGS&quot;</span>
-<span class="key">let</span> linkFlags <span class="sym">=</span> fromMaybe <span class="str">&quot;&quot;</span> link    
+<span class="key">let</span> linkFlags <span class="sym">=</span> fromMaybe <span class="str">&quot;&quot;</span> link
 <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:cmd_">cmd_</a> <span class="str">&quot;gcc -o&quot;</span> <span class="sym">[</span>output<span class="sym">]</span> inputs linkFlags</code></pre>
 <p>This example gets the <code>$C_LINK_FLAGS</code> environment variable (which is <code>Maybe String</code>, namely a <code>String</code> that might be missing), then using <code>fromMaybe</code> defines a local variable <code>linkFlags</code> that is the empty string when <code>$C_LINK_FLAGS</code> is not set. It then passes these flags to <code>gcc</code>.</p>
 <p>If the <code>$C_LINK_FLAGS</code> environment variable changes then this rule will rebuild.</p>

@@ -1,10 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8"></meta>
         <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
         <meta name="viewport" content="width=device-width"></meta>
-        <!-- favicon from http://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <!-- favicon from https://findicons.com/icon/445768/blue_lego?id=445922 -->
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
         <title>Shake Build System</title>
         <link rel="stylesheet" href="index.css"></link>
@@ -38,7 +38,7 @@ Shake is suitable for all sizes of build systems, from a simple C project to a h
 * [Small/simple build systems](Small.md#readme) -- some simpler build systems can be written as _forward_ build systems, without the need to explicitly think about dependencies or targets. Useful for getting started, relies on a tool to automatically track your dependencies.
 * [Large frequently changing build systems](Large.md#readme) -- for large build systems, it is useful to split the build system interpreter and metadata apart, making changes to the Haskell build system comparatively rare.
 --><span class="target" id="any-more-documentation"></span><h4><a href="#any-more-documentation" class="anchor">Q: Any more documentation?</a></h4>
-<p>There is a complete list of <a href="https://hackage.haskell.org/packages/archive/shake/latest/doc/html/Development-Shake.html">every function in Shake</a> which <a href="http://hoogle.haskell.org/?package=shake">can be searched</a>. Each function comes with documentation and examples.</p>
+<p>There is a complete list of <a href="https://hackage.haskell.org/packages/archive/shake/latest/doc/html/Development-Shake.html">every function in Shake</a> which <a href="https://hoogle.haskell.org/?package=shake">can be searched</a>. Each function comes with documentation and examples.</p>
 <p>Much of the theory behind Shake is covered in <a href="https://ndmitchell.com/downloads/paper-shake_before_building-10_sep_2012.pdf">a conference paper</a> which was accompanied by <a href="https://www.youtube.com/watch?v=xYCPpXVlqFM">this video</a> (<a href="https://ndmitchell.com/downloads/slides-shake_before_building-10_sep_2012.pdf">slides</a>). Since then I've given videoed talks on <a href="https://www.infoq.com/presentations/shake">small worked examples</a> (<a href="https://ndmitchell.com/downloads/slides-building_stuff_with_shake-20_nov_2014.pdf">slides</a>) and <a href="https://skillsmatter.com/skillscasts/6548-defining-your-own-build-system-with-shake">how to structure large Shake systems</a> (<a href="https://ndmitchell.com/downloads/slides-defining_your_own_build_system_with_shake-09_oct_2015.pdf">slides</a>).</p>
 <p>I sometimes write about ongoing development work or other Shake-related things on <a href="https://neilmitchell.blogspot.co.uk/search/label/shake">my blog</a>.</p>
 <p>If you have any further questions:</p>
@@ -60,7 +60,10 @@ Shake is suitable for all sizes of build systems, from a simple C project to a h
 <p>We recommend using only relative file names in Shake.</p>
 <p>Shake can use file names that are either absolute (<code>C:\file.txt</code>, <code>/file.txt</code>) or relative (<code>file.txt</code>). However, Shake compares filenames by value, so if you <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> both <code>file.txt</code> and <code>/file.txt</code> it will attempt to build both, likely resulting in failure - within a single Shake project you must stick to either relative or absolute file names.</p>
 <span class="target" id="how-can-i-depend-on-directories"></span><h4><a href="#how-can-i-depend-on-directories" class="anchor">Q: How can I depend on directories?</a></h4>
-<p>Think of directories as containers for files. They exist or don't pretty randomly, but if they have files, they must exist. In particular, you can't depend on a directory with <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> or write a rule to create a directory. Directories are created as needed &ndash; the rule for <code>bar/baz.exe</code> will create the <code>bar</code> directory if necessary. If you want to depend on a <code>git clone</code> having being performed, depend on a particular checked-out file instead (e.g. <code>README.md</code>), with the rule to create it being <code>git clone</code>.</p>
+<p>Think of directories as containers for files. They exist or don't pretty randomly, but if they have files, they must exist. In particular, you can't depend on a directory with <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> or write a rule to create a directory. Directories are created as needed &ndash; the rule for <code>bar/baz.exe</code> will create the <code>bar</code> directory if necessary. As some examples of &quot;depending&quot; on directories:</p>
+<ul><li>If you want to depend on a <code>git clone</code> having being performed, depend on a particular checked-out file instead (e.g. <code>README.md</code>), with the action in the rule to create it being <code>git clone</code>.</li>
+<li>If you want to depend on a <code>node_modules</code> having been updated after changing <code>package.json</code>, create a stamp file by copying <code>package.json</code> after running <code>npm update</code> (see <a href="https://stackoverflow.com/questions/35938956/haskell-shake-special-rule-for-building-directories">this detailed answer</a>).</li>
+</ul>
 <p>There is a tracked function <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:doesDirectoryExist">doesDirectoryExist</a></code>, to depend on the presence or absence of a directory, but you should not call it on directories which might be created by the build system.</p>
 <span class="target" id="what-ghc-bugs-has-shake-found"></span><h4><a href="#what-ghc-bugs-has-shake-found" class="anchor">Q: What GHC bugs has Shake found?</a></h4>
 <p>For some reason, Shake tends to find a reasonable number of serious bugs in GHC, given how few bugs there are generally in GHC. I suspect the reason is a combination of thorough testing including with GHC pre-releases. Some of the best bugs found by Shake are:</p>
@@ -73,6 +76,7 @@ Shake is suitable for all sizes of build systems, from a simple C project to a h
 <li><a href="https://ghc.haskell.org/trac/ghc/ticket/10553">GHC bug 10553</a>, <code>getEnvironment</code> was blank when run on PowerPC in <code>ghci</code>.</li>
 <li><a href="https://ghc.haskell.org/trac/ghc/ticket/10549">GHC bug 10549</a>, inconsistent optimisation flags leading to fatal errors in a pre-release.</li>
 <li><a href="https://ghc.haskell.org/trac/ghc/ticket/10176">GHC bug 10176</a>, invalid optimisations caused by a part of GHC that had been formally proved to be correct, in a pre-release.</li>
+<li><a href="https://ghc.haskell.org/trac/ghc/ticket/10793">GHC bug 10793</a>, <code>BlockedIndefinitelyOnMVar</code> can be raised even if the thread isn't indefinitely blocked.</li>
 </ul>
 <span class="target" id="whats-the-history-of-shake"></span><h4><a href="#whats-the-history-of-shake" class="anchor">Q: What's the history of Shake?</a></h4>
 <p>I (<a href="https://ndmitchell.com">Neil Mitchell</a>) was one of the people behind the <a href="https://www.haskell.org/haskellwiki/Yhc">Yhc project</a>, a Haskell compiler that died in a large part because of its build system. To quote from <a href="https://yhc06.blogspot.co.uk/2011/04/yhc-is-dead.html">the final blog post</a>:</p>
