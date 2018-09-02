@@ -50,6 +50,7 @@
 <li><a href="https://www.fpcomplete.com/">FP Complete</a> use Shake to <a href="https://www.fpcomplete.com/blog/2015/08/stack-docker#images">create Docker images</a>.</li>
 <li><a href="http://www.genomicsplc.com/">Genomics Plc</a> use Shake for the build system, their first major use of Haskell in the company.</li>
 <li><a href="https://codebender.cc/">codebender</a> use Shake to manage JavaScript packages that implement Arduino protocols and handle communication between the browser and Arduino devices.</li>
+<li><a href="https://www.swiftnav.com/">Swift Navigation</a> use Shake for their release process, asa described by <a href="https://github.com/swift-nav/shake-before-make/blob/master/Shake.pdf">their presentation</a>.</li>
 </ul>
 <p>There are several libraries providing pre-made rules for Shake:</p>
 <ul><li><a href="https://hackage.haskell.org/package/shake-language-c">shake-language-c</a> allows cross-compiling C, C++ and Objective-C code to various target platforms.</li>
@@ -59,9 +60,9 @@
 <li><a href="https://hackage.haskell.org/package/shake-minify">shake-minify</a> uses native Haskell code (no external <code>$PATH</code> dependencies) to minify CSS and JS files.</li>
 <li><a href="https://hackage.haskell.org/package/shake-pack">shake-pack</a> uses bz2 lib on the system to tar and bzip compress given files.</li>
 </ul>
-<p>There is one library taking Shake into a new domain:</p>
-<ul><li><p><a href="https://github.com/PapenfussLab/bioshake">bioshake</a> lets users define bioinformatics pipelines in a DSL that is executed in conjunction with Shake, also including support for cluster execution.</p>
-</li>
+<p>Some libraries push Shake into specific domains:</p>
+<ul><li><a href="https://github.com/PapenfussLab/bioshake">bioshake</a> lets users define bioinformatics pipelines in a DSL that is executed in conjunction with Shake, also including support for cluster execution.</li>
+<li><a href="https://hackage.haskell.org/package/slick">Slick</a> is a static site generator written and configured using Haskell. Slick provides a small set of tools and combinators for building static websites on top of the Shake build system.</li>
 </ul>
 <p>Several open-source projects make key use of Shake:</p>
 <ul><li><a href="https://github.com/TiborIntelSoft/ToolCabal">ToolCabal</a> is a rewrite of <a href="https://www.haskell.org/cabal/">Cabal</a> using Shake as the dependency engine.</li>
