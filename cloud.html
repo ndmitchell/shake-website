@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <meta name="viewport" content="width=device-width"></meta>
+        <!-- favicon from https://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
+        <title>Shake Build System</title>
+        <link rel="stylesheet" href="index.css"></link>
+
+
+
+    </head>
+    <body class="page-cloud">
+
+<div id="header">
+    <a href="https://shakebuild.com" id="header-root">Shake build system</a>
+    <a href="." id="header-first">Home</a>
+    <a href="why">Why Shake</a>
+    <a href="manual">Manual</a>
+    <a href="faq">FAQ</a>
+</div>
+
+<div id="content"><div id="toc"><a class="h2" href="#the-model">The Model</a><a class="h2" href="#running-cloud-shake">Running Cloud Shake</a><a class="h2" href="#modifying-your-build-system">Modifying your build system</a></div><h1>Cloud Shake</h1>
+<p>The idea of Cloud Shake is to have a cache of previously computed rules which can be used in a build, avoiding rebuilding the rules. Currently, Cloud Shake is very much in development, with open questions and prototype implementations, but it does exist.</p>
+<span class="target" id="the-model"></span><h2><a href="#the-model" class="anchor">The Model</a></h2>
+<p>Shake adds a feature called &quot;History&quot;. An entry in the history describes a key, it's dependencies, and it's outputs. The plan was to provide two ways to satisfy the history:</p>
+<ul><li>Via a shared file area, which records history entries in files.</li>
+<li>Via a web server, with a custom protocol.</li>
+</ul>
+<p>That was the plan, but then Simon Peyton Jones suggested that actually the shared drive approach is sufficient. You can map a drive over the internet, use NFS, rsync, you can control permissions, you can explore it with the file system. The only purpose of a web server was to provide a more efficient communication pipe, but is it actually more efficient? And it is worth the cost? These are open questions.</p>
+<p>At the moment the shared file area approach is implemented, and works. It hasn't been tested on a remote shared drive, and isn't particularly well designed to support that, although it might work, and could certainly be adapted. The web server approach hasn't been finished, so doesn't work at all. We're left with the question - push forward with the shared file area and delete the web server, or push forward with the web server. Proof of someone using the file area successfully would be enough to kill the web server.</p>
+<span class="target" id="running-cloud-shake"></span><h2><a href="#running-cloud-shake" class="anchor">Running Cloud Shake</a></h2>
+<p>To run Cloud Shake pass <code>--share=LOCATION</code> with where you want the cache to go. That's it. However, it probably won't work unless your build system obeys a number of invariants.</p>
+<span class="target" id="modifying-your-build-system"></span><h2><a href="#modifying-your-build-system" class="anchor">Modifying your build system</a></h2>
+<p>To make your build system work with a shared cache, it is important that any files which are produced by a rule, but are not official outputs of the rule, are still recorded - otherwise they won't end up in the cache. The easiest way to test if your build system works already is to:</p>
+<ul><li>Build using <code>--share</code>.</li>
+<li>Delete all build outputs, but not the shared directory.</li>
+<li>Build using <code>--share</code>.</li>
+</ul>
+<p>In likelihood, the build will fail because it can't find a file. Figure out which rule produced that file and either:</p>
+<ul><li>Adjust to using <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:-38--37--62-">&amp;%&gt;</a></code> which declares that a rule produces multiple files.</li>
+<li>Add a call to <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:produces">produces</a></code> to declare that the file was produced.</li>
+</ul>
+<p>If you can't figure out file produces the rule, use <code>-j1 --lint-watch<span class="sym">=</span>FILE</code> which will raise an error as soon as a rule terminates and the file has changed (including being creased).</p>
+<p>After fixing the recording of items in the cache, you can clean and try again. If that process is slow a combination of <code>--share-list</code> (see what's in the cache) and <code>--share-remove=RULE</code> (delete any keys which match that substring) might help iterate more quickly.</p>
+<p>If a rule shouldn't be stored in the cache (e.g. because it modifies files that already exist) use <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:historyDisable">historyDisable</a></code>.</p>
+<p>The <a href="https://www.haskell.org/ghc/">GHC</a> build system <a href="https://ghc.haskell.org/trac/ghc/wiki/Building/Hadrian/QuickStart">Hadrian</a> is now able to build with <code>--share</code> following <a href="https://gitlab.haskell.org/ghc/ghc/merge_requests/317">this patch</a> (which also does unrelated refactorings).</p>
+</div><p id="footer">
+    Questions? Feedback?
+    <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>.
+    Collaborate through <a href="https://github.com/ndmitchell/shake">GitHub</a>.
+    Ask at <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a>.
+</p>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-286191-4', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"></meta>
+        <meta http-equiv="X-UA-Compatible" content="chrome=1"></meta>
+        <meta name="viewport" content="width=device-width"></meta>
+        <!-- favicon from https://findicons.com/icon/445768/blue_lego?id=445922 -->
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"></link>
+        <title>Shake Build System</title>
+        <link rel="stylesheet" href="index.css"></link>
+
+
+
+    </head>
+    <body class="page-lint">
+
+<div id="header">
+    <a href="https://shakebuild.com" id="header-root">Shake build system</a>
+    <a href="." id="header-first">Home</a>
+    <a href="why">Why Shake</a>
+    <a href="manual">Manual</a>
+    <a href="faq">FAQ</a>
+</div>
+
+<div id="content"><div id="toc"><a class="h2" href="#changing-current-directory">Changing current directory</a><a class="h2" href="#changing-outputs-after-building">Changing outputs after building</a><a class="h2" href="#needed">Needed</a><a class="h2" href="#manual-tracking-functions">Manual tracking functions</a><a class="h2" href="#automatic-tracking-functions">Automatic tracking functions</a></div><h1>Lint features</h1>
+<p>Shake features a built in &quot;lint&quot; features to check the build system is well formed. To run use <code>build --lint</code>. You are likely to catch more lint violations if you first <code>build clean</code>. The lint features are listed in this document. There is a performance penalty for building with <code>--lint</code>, but it is typically small.</p>
+<span class="target" id="changing-current-directory"></span><h2><a href="#changing-current-directory" class="anchor">Changing current directory</a></h2>
+<p>Enabled with <code>--lint</code>. Detects changing the current directory, typically with <code>setCurrentDirectory</code>. You should never change the current directory within the build system as multiple rules running at the same time share the current directory. You can still run <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:cmd_">cmd_</a></code> calls in different directories using the <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:Cwd">Cwd</a></code> argument.</p>
+<span class="target" id="changing-outputs-after-building"></span><h2><a href="#changing-outputs-after-building" class="anchor">Changing outputs after building</a></h2>
+<p>Enabled with <code>--lint</code>. Detects if any files have changed after Shake has built them. There are a couple of causes for seeing this error:</p>
+<ul><li>If there is a rule producing <code>foo.o</code>, but another rule also modifies <code>foo.o</code>.</li>
+<li>If you are on a file system where files change modification time after a while. A standard example would be an NFS drive where the underlying network file system stores modification times to second-level resolution, but the in-memory cache keeps them precisely.</li>
+<li>If you modify the build sources while running a build.</li>
+</ul>
+<p>A consequence of this lint triggering would be that a subsequent build would do additional work, as it spots modifications.</p>
+<span class="target" id="needed"></span><h2><a href="#needed" class="anchor">Needed</a></h2>
+<p>Enabled with <code>--lint</code>. Calling <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:needed">needed</a></code> is normally equivalent to <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code>, but with <code>--lint</code> it also changes that the file does not change as a result of <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> - expressing that you have <i>already</i> used the contents of the file.</p>
+<span class="target" id="manual-tracking-functions"></span><h2><a href="#manual-tracking-functions" class="anchor">Manual tracking functions</a></h2>
+<p>Enabled with <code>--lint</code>. The tracking function <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:trackRead">trackRead</a></code> and <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:trackWrite">trackWrite</a></code> can be called to declare reads/writes, and they can assert various invariants about what files can be written where. Examples include:</p>
+<ul><li>You can only read a file that is either your dependency, or a transitive dependency.</li>
+<li>You can only write a file that you are declared to write, or that no one calls <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:need">need</a></code> on.</li>
+</ul>
+<p>Additionally, you can <i>ignore</i> certain missing rules with <code>--lint-ignore=PATTERN</code>. In general all files passed to <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:trackRead">trackRead</a></code> or <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:trackWrite">trackWrite</a></code> are expected to be relative to the current directory, so <code>--lint-ignore</code> patterns should match those relative paths.</p>
+<span class="target" id="automatic-tracking-functions"></span><h2><a href="#automatic-tracking-functions" class="anchor">Automatic tracking functions</a></h2>
+<p>Using <a href="https://github.com/jacereda/fsatrace"><code>fsatrace</code></a> you can augment command line programs (called with <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:cmd">cmd</a></code> or <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:command">command</a></code>) to automatically track which files they read and write, which turn into <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:trackRead">trackRead</a></code> and <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:trackWrite">trackWrite</a></code> calls. To enable this feature pass <code>--lint-fsatrace=DIR</code> passing the directories you want to lint. Passing <code>--lint-fsatrace</code> is equivalent to <code>--lint-fsatrace=.</code> - namely only lint the current directory.</p>
+<p>This feature requires <code>fsatrace</code> to be on the <code>$PATH</code>, as documented on <a href="https://github.com/jacereda/fsatrace">the homepage</a>. If you are using Windows, you can download a <a href="https://github.com/ndmitchell/shake/releases/tag/fsatrace-1">binary release here</a>.</p>
+</div><p id="footer">
+    Questions? Feedback?
+    <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>.
+    Collaborate through <a href="https://github.com/ndmitchell/shake">GitHub</a>.
+    Ask at <a href="https://stackoverflow.com/questions/tagged/shake-build-system">StackOverflow</a>.
+</p>
+
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-286191-4', 'auto');
+ga('send', 'pageview');
+</script>
+
+</body>
+</html>
