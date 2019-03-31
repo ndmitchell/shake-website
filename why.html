@@ -65,7 +65,7 @@
 <span class="target" id="supports-large-robust-systems"></span><h4><a href="#supports-large-robust-systems" class="anchor">Supports large robust systems</a></h4>
 <p>Shake build systems can scale to tens of thousands of lines without becoming unwieldy.</p>
 <ul><li>Shake uses Haskell to provide facilities for properly structuring large projects. In particular, Shake build systems can use functions to reuse common functionality, modules to group functions into separate files and packages to allow reusing and sharing modules.</li>
-<li>The types and utility functions provided by Shake eliminate certain classes of common error, making it harder express invalid build systems.</li>
+<li>The types and utility functions provided by Shake eliminate certain classes of common error, making it harder to express invalid build systems.</li>
 <li>The lint mode performs sanity checks of the build system, allowing errors to be caught sooner.</li>
 </ul>
 <span class="target" id="provides-profiling-information"></span><h4><a href="#provides-profiling-information" class="anchor">Provides profiling information</a></h4>
@@ -74,7 +74,7 @@
 <li>The report can be used to speed up by the build by identifying which commands are most expensive, which files cause most rebuilding and any bottlenecks in parallelism.</li>
 <li>The report can examine details of the last run, providing information about what built and why.</li>
 <li>Profiles are always recorded, allowing profile reports to be generated after a run completes, without requesting any &quot;profiling mode&quot; in advance. Shake ensures profiling information is recorded with no measurable performance impact.</li>
-<li>Graphs can be generating showing dependencies, usually grouped by either file type or location, making it easy to see the overall structure of the build.</li>
+<li>Graphs can be generated showing dependencies, usually grouped by either file type or location, making it easy to see the overall structure of the build.</li>
 <li>Reports can be mined using a powerful querying language to determine custom information about your build.</li>
 </ul>
 <span class="target" id="why-not"></span><h4><a href="#why-not" class="anchor">Why not?</a></h4>
