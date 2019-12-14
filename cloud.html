@@ -22,7 +22,7 @@
     <a href="faq">FAQ</a>
 </div>
 
-<div id="content"><div id="toc"><a class="h2" href="#the-model">The Model</a><a class="h2" href="#running-cloud-shake">Running Cloud Shake</a><a class="h2" href="#modifying-your-build-system">Modifying your build system</a></div><h1>Cloud Shake</h1>
+<div id="content"><div id="toc"><a class="h2" href="#the-model">The Model</a><a class="h2" href="#running-cloud-shake">Running Cloud Shake</a><a class="h2" href="#modifying-your-build-system">Modifying your build system</a><a class="h2" href="#symlinks-and-read-only-output-files">Symlinks and Read only output files</a></div><h1>Cloud Shake</h1>
 <p>The idea of Cloud Shake is to have a cache of previously computed rules which can be used in a build, avoiding rebuilding the rules. Currently, Cloud Shake is very much in development, with open questions and prototype implementations, but it does exist.</p>
 <span class="target" id="the-model"></span><h2><a href="#the-model" class="anchor">The Model</a></h2>
 <p>Shake adds a feature called &quot;History&quot;. An entry in the history describes a key, it's dependencies, and it's outputs. The plan was to provide two ways to satisfy the history:</p>
@@ -47,6 +47,9 @@
 <p>After fixing the recording of items in the cache, you can clean and try again. If that process is slow a combination of <code>--share-list</code> (see what's in the cache) and <code>--share-remove=RULE</code> (delete any keys which match that substring) might help iterate more quickly.</p>
 <p>If a rule shouldn't be stored in the cache (e.g. because it modifies files that already exist) use <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:historyDisable">historyDisable</a></code>.</p>
 <p>The <a href="https://www.haskell.org/ghc/">GHC</a> build system <a href="https://ghc.haskell.org/trac/ghc/wiki/Building/Hadrian/QuickStart">Hadrian</a> is now able to build with <code>--share</code> following <a href="https://gitlab.haskell.org/ghc/ghc/merge_requests/317">this patch</a> (which also does unrelated refactorings).</p>
+<span class="target" id="symlinks-and-read-only-output-files"></span><h2><a href="#symlinks-and-read-only-output-files" class="anchor">Symlinks and Read only output files</a></h2>
+<p>When run in <code>--share</code> mode, by default Shake copies the files to and from the shared location. However, that causes a lot of expensive IO - you may instead wish to use <code>--share-symlink</code> which uses hard links to link the files together. Unfortunately, when the files are linked together, changing one file changes both - which can corrupt the cache. To avoid that severe problem, when using <code>--share-symlink</code> Shake marks both files as read-only. As a consequence, if a rule tries to modify the output file it may fail - it may need to <i>delete</i> the output file and recreate it.</p>
+<p>One day hopefully file systems will expose real copy-on-write files, until then, every option involves some kind of trade off.</p>
 </div><p id="footer">
     Questions? Feedback?
     <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>.

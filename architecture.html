@@ -38,9 +38,9 @@
 data Status v
     <span class="sym">=</span> Loaded <span class="sym">(</span>Result v<span class="sym">)</span>
     <span class="sym">|</span> Running <span class="sym">(</span>Either SomeException <span class="sym">(</span>Result v<span class="sym">)</span> <span class="sym">-&gt;</span> IO <span class="sym">(</span><span class="sym">)</span><span class="sym">)</span>
-    <span class="sym">|</span> Error SomeException
+    <span class="sym">|</span> Failed SomeException
     <span class="sym">|</span> Ready <span class="sym">(</span>Result v<span class="sym">)</span></code></pre>
-<p>Data is loaded in the <code>Loaded</code> state. When someone demands a key it moves to <code>Running</code> - anyone who subsequently demands it will be added to the callback. After the run completes it becomes either <code>Error</code> or <code>Ready</code>.</p>
+<p>Data is loaded in the <code>Loaded</code> state. When someone demands a key it moves to <code>Running</code> - anyone who subsequently demands it will be added to the callback. After the run completes it becomes either <code>Failed</code> or <code>Ready</code>.</p>
 <p><b>Execution Model</b></p>
 <p>Shake runs values in the <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#t:Action">Action</a></code> monad, which is a combination of some global state (e.g. settings), per-rule state (e.g. dependencies) and continuations, with IO underlying everything. The execution model of Shake is that every <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#t:Action">Action</a></code> computation is either blocked waiting for a <code>Running</code> to complete, or queued/executing with the thread pool. The thread pool has a list of things to do and runs them in a given priority order, respecting parallelism constraints. Most threads start up, do a bit of work, block on a <code>Running</code> and leave it for another item in the thread pool to requeue them.</p>
 <p>To pause a thread we use continuations, meaning the most important operation on <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#t:Action">Action</a></code> (which isn't available to users!) is:</p>
@@ -50,9 +50,9 @@ data Status v
 <p>To kick start the thread pool, the user specifies things to run with <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:action">action</a></code> - a Shake program completes when all those initial <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake.html#v:action">action</a></code> calls have completed.</p>
 <p><b>Rules</b></p>
 <p>The final piece of the puzzle is what Shake actually <i>does</i> to build a key. The core of Shake is abstract over the <code>k</code> and <code>v</code>, but Shake ships with an outer layer of around ten additional rule types &ndash; the most important of which is files. Taking an idealised (and inefficient) file rule, we can think of it as mapping from file paths to file contents. To provide such a rule, we first declare the type mapping:</p>
-<pre>type instance RuleResult FilePath <span class="sym">=</span> String</code></pre>
+<pre>type instance RuleResult <a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-FilePath.html#t:FilePath">FilePath</a> <span class="sym">=</span> String</code></pre>
 <p>And then declare the rule. The rule says how to take the key (the filename), whether its dependencies have changed, the old value (the old contents), and produce a new value (the current contents). In addition, the rule must say if the contents have changed in a meaningful way, which causes anyone who depended on them to rebuild.</p>
-<p>Shake programs typically call <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-Rule.html#v:apply">apply</a></code> which builds a list of keys in parallel, moving all the keys to <code>Loaded</code> (or at least one to <code>Error</code>) before continuing.</p>
+<p>Shake programs typically call <code><a href="https://hackage.haskell.org/package/shake/docs/Development-Shake-Rule.html#v:apply">apply</a></code> which builds a list of keys in parallel, moving all the keys to <code>Loaded</code> (or at least one to <code>Failed</code>) before continuing.</p>
 </div><p id="footer">
     Questions? Feedback?
     <a href="https://groups.google.com/forum/?fromgroups#!forum/shake-build-system">Email us</a>.
