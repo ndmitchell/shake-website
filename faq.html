@@ -76,17 +76,18 @@ Shake is suitable for all sizes of build systems, from a simple C project to a h
 </ul>
 <span class="target" id="what-ghc-bugs-has-shake-found"></span><h4><a href="#what-ghc-bugs-has-shake-found" class="anchor">Q: What GHC bugs has Shake found?</a></h4>
 <p>For some reason, Shake tends to find a reasonable number of serious bugs in GHC, given how few bugs there are generally in GHC. I suspect the reason is a combination of thorough testing including with GHC pre-releases. Some of the best bugs found by Shake are:</p>
-<ul><li><a href="https://ghc.haskell.org/trac/ghc/ticket/7646">GHC bug 7646</a>, a race condition when closing file handles that had been in several releases.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/10830">GHC bug 10830</a>, <code>maximumBy</code> had a space leak in a released version.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/11555">GHC bug 11555</a>, <code>catch</code> wouldn't catch an <code>undefined</code> argument passed to it in a pre-release.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/11830">GHC bug 11830</a>, livelock when disabling idle GC in a pre-release.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/11458">GHC bug 11458</a> (originally from <a href="https://ghc.haskell.org/trac/ghc/ticket/11379">GHC bug 11379</a>), serious issue with type applications producing dodgy programs in a pre-release.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/11978">GHC bug 11978</a>, segfaults when running certain profiling modes that weren't multithread safe.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/10553">GHC bug 10553</a>, <code>getEnvironment</code> was blank when run on PowerPC in <code>ghci</code>.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/10549">GHC bug 10549</a>, inconsistent optimisation flags leading to fatal errors in a pre-release.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/10176">GHC bug 10176</a>, invalid optimisations caused by a part of GHC that had been formally proved to be correct, in a pre-release.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/10793">GHC bug 10793</a>, <code>BlockedIndefinitelyOnMVar</code> can be raised even if the thread isn't indefinitely blocked.</li>
-<li><a href="https://ghc.haskell.org/trac/ghc/ticket/15595">GHC bug 15595</a>, <code>withArgs</code> on a limited stack loops forever consuming memory.</li>
+<ul><li><a href="https://gitlab.haskell.org/ghc/ghc/issues/7646">GHC bug 7646</a>, a race condition when closing file handles that had been in several releases.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/10830">GHC bug 10830</a>, <code>maximumBy</code> had a space leak in a released version.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/11555">GHC bug 11555</a>, <code>catch</code> wouldn't catch an <code>undefined</code> argument passed to it in a pre-release.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/11830">GHC bug 11830</a>, livelock when disabling idle GC in a pre-release.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/11458">GHC bug 11458</a> (originally from <a href="https://gitlab.haskell.org/ghc/ghc/issues/11379">GHC bug 11379</a>), serious issue with type applications producing dodgy programs in a pre-release.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/11978">GHC bug 11978</a>, segfaults when running certain profiling modes that weren't multithread safe.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/10553">GHC bug 10553</a>, <code>getEnvironment</code> was blank when run on PowerPC in <code>ghci</code>.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/10549">GHC bug 10549</a>, inconsistent optimisation flags leading to fatal errors in a pre-release.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/10176">GHC bug 10176</a>, invalid optimisations caused by a part of GHC that had been formally proved to be correct, in a pre-release.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/10793">GHC bug 10793</a>, <code>BlockedIndefinitelyOnMVar</code> can be raised even if the thread isn't indefinitely blocked.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/15595">GHC bug 15595</a>, <code>withArgs</code> on a limited stack loops forever consuming memory.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/17575">GHC bug 17575</a>, <code>runhaskell -package<span class="sym">=</span>Cabal</code> causes an error.</li>
 </ul>
 <span class="target" id="whats-the-history-of-shake"></span><h4><a href="#whats-the-history-of-shake" class="anchor">Q: What's the history of Shake?</a></h4>
 <p>I (<a href="https://ndmitchell.com">Neil Mitchell</a>) was one of the people behind the <a href="https://www.haskell.org/haskellwiki/Yhc">Yhc project</a>, a Haskell compiler that died in a large part because of its build system. To quote from <a href="https://yhc06.blogspot.co.uk/2011/04/yhc-is-dead.html">the final blog post</a>:</p>
