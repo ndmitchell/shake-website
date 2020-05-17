@@ -53,8 +53,9 @@
 <li><a href="https://www.noredink.com/">NoRedInk</a> use Shake <a href="https://twitter.com/rtfeldman/status/1113968101060689920">to build stuff</a>.</li>
 <li><a href="https://www.digitalasset.com/">Digital Asset</a> use Shake as part of their <a href="https://daml.com/">DAML SDK IDE</a>, as can be seen <a href="https://github.com/digital-asset/daml/blob/eed24b01ae4b0ca1bf024612354e88c15c9d30c0/compiler/haskell-ide-core/src/Development/IDE/State/Shake.hs">in the central module</a>.</li>
 </ul>
-<p>There are several libraries providing pre-made rules for Shake:</p>
-<ul><li><a href="https://hackage.haskell.org/package/shake-language-c">shake-language-c</a> allows cross-compiling C, C++ and Objective-C code to various target platforms.</li>
+<p>There are several libraries providing pre-made rules and extending Shake:</p>
+<ul><li><a href="https://hackage.haskell.org/package/shake-plus">shake-plus</a> wraps all of Shake to use the <a href="https://hackage.haskell.org/package/path">Path library</a>, <a href="https://hackage.haskell.org/package/transformers/docs/Control-Monad-Trans-Reader.html#t:ReaderT"><code>ReaderT</code> wrappers</a> and the <a href="https://hackage.haskell.org/package/text">Text library</a>.</li>
+<li><a href="https://hackage.haskell.org/package/shake-language-c">shake-language-c</a> allows cross-compiling C, C++ and Objective-C code to various target platforms.</li>
 <li><a href="https://github.com/jfeltz/shake-cpp">shake-cpp</a> is an abstraction layer for Shake, providing simple C++ rules.</li>
 <li><a href="https://hackage.haskell.org/package/kansas-lava-shake">kansas-lava-shake</a> provides a set of rules to work with <a href="https://hackage.haskell.org/package/kansas-lava">Kansas Lava</a> and compile down to <a href="https://www.xilinx.com/">Xilinx chips</a>.</li>
 <li><a href="https://hackage.haskell.org/package/avr-shake">avr-shake</a> provides rules for building things with <a href="https://www.obdev.at/products/crosspack/index.html">AVR Crosspack</a>.</li>
