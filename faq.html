@@ -88,6 +88,7 @@ Shake is suitable for all sizes of build systems, from a simple C project to a h
 <li><a href="https://gitlab.haskell.org/ghc/ghc/issues/10793">GHC bug 10793</a>, <code>BlockedIndefinitelyOnMVar</code> can be raised even if the thread isn't indefinitely blocked.</li>
 <li><a href="https://gitlab.haskell.org/ghc/ghc/issues/15595">GHC bug 15595</a>, <code>withArgs</code> on a limited stack loops forever consuming memory.</li>
 <li><a href="https://gitlab.haskell.org/ghc/ghc/issues/17575">GHC bug 17575</a>, <code>runhaskell -package<span class="sym">=</span>Cabal</code> causes an error.</li>
+<li><a href="https://gitlab.haskell.org/ghc/ghc/issues/18221">GHC bug 18221</a>, <code>forkOn</code> has complexity <i>O(n^2)</i>.</li>
 </ul>
 <span class="target" id="whats-the-history-of-shake"></span><h4><a href="#whats-the-history-of-shake" class="anchor">Q: What's the history of Shake?</a></h4>
 <p>I (<a href="https://ndmitchell.com">Neil Mitchell</a>) was one of the people behind the <a href="https://www.haskell.org/haskellwiki/Yhc">Yhc project</a>, a Haskell compiler that died in a large part because of its build system. To quote from <a href="https://yhc06.blogspot.co.uk/2011/04/yhc-is-dead.html">the final blog post</a>:</p>
